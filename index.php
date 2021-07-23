@@ -13,7 +13,7 @@
 </body>
 <script>
     function myFunc() {
-        document.querySelector('h1').style.color = 'blue';
+        document.querySelector('h1').style.color = 'red';
     }
 </script>
 </html>
