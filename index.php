@@ -38,6 +38,7 @@ if (isset($_POST['submit'])) {
         <input type="password" placeholder="Enter cpassword" name="cpassword"><br><br>
         <button type="submit" name="submit">Submit</button>
     </form>
+    <iframe width="560" height="315" src="https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_iframe" frameborder="0" allowfullscreen></iframe>
 </body>
 
 </html>
