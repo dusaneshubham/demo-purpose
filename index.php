@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
         <input type="text" placeholder="Enter user" name="user"><br><br>
         <input type="email" placeholder="Enter email" name="email"><br><br>
         <input type="password" placeholder="Enter password" name="password"><br><br>
-        <input type="password" placeholder="Enter cpassword" name="cpassword"><br><br>
+        <input type="number" placeholder="Enter phone" name="cpassword"><br><br>
         <button type="submit" name="submit">Submit</button>
     </form>
     <iframe width="560" height="315" src="https://meet.google.com/dyx-zfgr-qgc" frameborder="0" allowfullscreen></iframe>
