@@ -1,24 +1,39 @@
 <?php
-$conn = mysqli_connect('remotemysql.com', 'ajLjW9uMW1', 'QlPLa4PrDU', 'ajLjW9uMW1') or die('Not connected');
 
-if (isset($_POST['submit'])) {
-    $user = $_POST['user'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $cpassword = $_POST['cpassword'];
+if (isset($_FILES['inputImage'])) {
+    $inputImage = $_FILES['inputImage'];
+    if ($inputImage['size'] != 0) {
+        $imageTmpName = $inputImage['tmp_name'];
+        $path = move_uploaded_file($imageTmpName, 'images/' . $inputImage['name']);
+        echo $path;
 
-    $sql = "insert into signup(user,email,pass,cpass) values('$user', '$email', '$password', '$cpassword')";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-        echo "<script>
-                alert('Submitted');
-              </script>";
-            header('location:index.php');
-    }
-    else {
-        echo "Not submitted";
+        $img = imagecreatefromjpeg('images/' . $inputImage['name']);
+        print_r(imagejpeg($img, './images/output.jpg', 30)); // give option to user to select % of compression
+
+        unlink('./images/' . $inputImage['name']);
+
+        $imageName = basename('output.jpg');
+        $imageOutputPath = './images/' . $imageName;
+        if(!empty($imageName) && file_exists($imageOutputPath)) {
+            header('Cache-Control: public');
+            header('Content-Description: File Transfer');
+            header('Content-Disposition: attachment; filename=' . $imageName);
+            header('Content-Type: image/jpeg');
+            header('Content-Transfer-Encoding: binary');
+
+            readfile($imageOutputPath);
+            exit;
+        }
+        else {
+            echo "No file exists";
+        }
+
+    } else {
+        echo "Upload the image";
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -31,14 +46,11 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <form action="index.php" method="post">
-        <input type="text" placeholder="Enter user" name="user"><br><br>
-        <input type="email" placeholder="Enter email" name="email"><br><br>
-        <input type="password" placeholder="Enter password" name="password"><br><br>
-        <input type="number" placeholder="Enter phone" name="cpassword"><br><br>
-        <button type="submit" name="submit">Submit</button>
+    <form action="" method="post" enctype="multipart/form-data">
+        <h3>Upload image</h3>
+        <input type="file" name="inputImage" id="inputImage">
+        <button type="submit">Submit</button>
     </form>
-    <iframe width="560" height="315" src="https://meet.google.com/dyx-zfgr-qgc" frameborder="0" allowfullscreen></iframe>
 </body>
 
 </html>
